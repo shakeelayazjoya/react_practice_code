@@ -1,4 +1,4 @@
-const FoodInput = ({ handleOnChange }) => {
+const FoodInput = ({ handleOnKeyDown }) => {
   //   const handleOnChange = (event) => {
   //     console.log(event.target.value);
   // Call your function here to add the new item to the list.
@@ -9,7 +9,7 @@ const FoodInput = ({ handleOnChange }) => {
         type="text"
         className="p-2 m-3"
         placeholder="input here"
-        onChange={handleOnChange}
+        onKeyDown={handleOnKeyDown}
       />
     </div>
   );
