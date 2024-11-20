@@ -1,42 +1,28 @@
-import { useRef } from "react";
-import { IoBagAddSharp } from "react-icons/io5";
-import React from "react";
+import React, { useState, useContext } from "react";
+import { TodoContext } from "../context/TodoContext";
 
-function AddTodo({ onNewItem }) {
-  const todoNameElement = useRef();
-  const dueDateElement = useRef();
+const AddTodo = () => {
+  const [text, setText] = useState("");
+  const { addTodo } = useContext(TodoContext); // Access addTodo function
 
-  const handleButtonClick = (event) => {
-    event.preventDefault();
-    const todoName = todoNameElement.current.value;
-    const dueDate = dueDateElement.current.value;
-    dueDateElement.current.value = "";
-    todoNameElement.current.value = "";
-
-    console.log(`${todoName} due to ${dueDate}`);
-    onNewItem(todoName, dueDate);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (text.trim() === "") return;
+    addTodo({ id: Date.now(), text }); // Add new todo with unique ID
+    setText("");
   };
+
   return (
-    <div className="container text-center">
-      <form className="row kg-row" onSubmit={handleButtonClick}>
-        <div className="col-6">
-          <input
-            type="text"
-            ref={todoNameElement}
-            placeholder="Enter Todo Here"
-          />
-        </div>
-        <div className="col-4">
-          <input type="date" ref={dueDateElement} />
-        </div>
-        <div className="col-2">
-          <button type="submit" className="btn btn-success kg-button">
-            <IoBagAddSharp />
-          </button>
-        </div>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        placeholder="Add a new todo"
+      />
+      <button type="submit">Add Todo</button>
+    </form>
   );
-}
+};
 
 export default AddTodo;
